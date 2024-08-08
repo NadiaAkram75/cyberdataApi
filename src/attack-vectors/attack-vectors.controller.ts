@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { AttackVectorsService } from './attack-vectors.service';
 import { CreateAttackVectorDto } from './dto/create-attack-vector.dto';
@@ -24,27 +24,19 @@ export class AttackVectorsController {
     return this.service.findAll();
   }
 
-  @Get(':id')
-  @ApiOperation({ summary: 'Retrieve a specific attack vector by ID' })
-  @ApiResponse({ status: 200, description: 'The record with the given ID', type: AttackVector })
+  @Get('by-external-id/:externalId')
+  @ApiOperation({ summary: 'Retrieve a specific attack vector by external ID' })
+  @ApiResponse({ status: 200, description: 'The record with the given externalId', type: AttackVector })
   @ApiResponse({ status: 404, description: 'Not Found' })
-  findOne(@Param('id') id: string): Promise<AttackVector> {
-    return this.service.findOne(id);
+  findOne(@Param('externalId') externalId: string): Promise<AttackVector> {
+    return this.service.findByExternalId(externalId);
   }
 
-  @Put(':id')
-  @ApiOperation({ summary: 'Update a specific attack vector by ID' })
-  @ApiResponse({ status: 200, description: 'The updated record', type: AttackVector })
-  @ApiResponse({ status: 404, description: 'Not Found' })
-  update(@Param('id') id: string, @Body() updateDto: CreateAttackVectorDto): Promise<AttackVector> {
-    return this.service.update(id, updateDto);
-  }
-
-  @Delete(':id')
-  @ApiOperation({ summary: 'Delete a specific attack vector by ID' })
+  @Delete('by-external-id/:externalId')
+  @ApiOperation({ summary: 'Delete a specific attack vector by external ID' })
   @ApiResponse({ status: 200, description: 'The record has been successfully deleted' })
   @ApiResponse({ status: 404, description: 'Not Found' })
-  delete(@Param('id') id: string): Promise<any> {
-    return this.service.delete(id);
+  delete(@Param('externalId') externalId: string): Promise<any> {
+    return this.service.delete(externalId);
   }
 }

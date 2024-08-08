@@ -24,27 +24,21 @@ export class SecurityTrendsController {
     return this.service.findAll();
   }
 
-  @Get(':id')
+  @Get(':trendId')
   @ApiOperation({ summary: 'Retrieve a specific security trend by ID' })
   @ApiResponse({ status: 200, description: 'The record with the given ID', type: SecurityTrend })
   @ApiResponse({ status: 404, description: 'Not Found' })
-  findOne(@Param('id') id: string): Promise<SecurityTrend> {
-    return this.service.findOne(id);
+  findOne(@Param('trendId') trendId: string): Promise<SecurityTrend> {
+    return this.service.findOne(trendId);
   }
 
-  @Put(':id')
-  @ApiOperation({ summary: 'Update a specific security trend by ID' })
-  @ApiResponse({ status: 200, description: 'The updated record', type: SecurityTrend })
-  @ApiResponse({ status: 404, description: 'Not Found' })
-  update(@Param('id') id: string, @Body() updateDto: CreateSecurityTrendDto): Promise<SecurityTrend> {
-    return this.service.update(id, updateDto);
-  }
+ 
 
-  @Delete(':id')
+  @Delete(':trendId')
   @ApiOperation({ summary: 'Delete a specific security trend by ID' })
   @ApiResponse({ status: 200, description: 'The record has been successfully deleted' })
   @ApiResponse({ status: 404, description: 'Not Found' })
-  delete(@Param('id') id: string): Promise<any> {
-    return this.service.delete(id);
+  delete(@Param('trendId') trendId: string): Promise<any> {
+    return this.service.delete(trendId);
   }
 }

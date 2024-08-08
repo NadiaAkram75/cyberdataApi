@@ -25,27 +25,27 @@ export class ThreatIntelligenceController {
     return this.threatService.findAll();
   }
 
-  @Get(':id')
+  @Get(':threatId')
   @ApiOperation({ summary: 'Retrieve a specific threat intelligence record by ID' })
   @ApiResponse({ status: 200, description: 'The record with the given ID', type: ThreatIntelligence })
   @ApiResponse({ status: 404, description: 'Not Found' })
-  findOne(@Param('id') id: string): Promise<ThreatIntelligence> {
-    return this.threatService.findOne(id);
+  findOne(@Param('threatId') threatId: string): Promise<ThreatIntelligence> {
+    return this.threatService.findOne(threatId);
   }
 
-  @Put(':id')
-  @ApiOperation({ summary: 'Update a specific threat intelligence record by ID' })
-  @ApiResponse({ status: 200, description: 'The updated record', type: ThreatIntelligence })
-  @ApiResponse({ status: 404, description: 'Not Found' })
-  update(@Param('id') id: string, @Body() updateDto: UpdateThreatIntelligenceDto): Promise<ThreatIntelligence> {
-    return this.threatService.update(id, updateDto);
-  }
+  // @Put(':id')
+  // @ApiOperation({ summary: 'Update a specific threat intelligence record by ID' })
+  // @ApiResponse({ status: 200, description: 'The updated record', type: ThreatIntelligence })
+  // @ApiResponse({ status: 404, description: 'Not Found' })
+  // update(@Param('id') id: string, @Body() updateDto: UpdateThreatIntelligenceDto): Promise<ThreatIntelligence> {
+  //   return this.threatService.update(id, updateDto);
+  // }
 
-  @Delete(':id')
+  @Delete(':threatId')
   @ApiOperation({ summary: 'Delete a specific threat intelligence record by ID' })
   @ApiResponse({ status: 200, description: 'The record has been successfully deleted' })
   @ApiResponse({ status: 404, description: 'Not Found' })
-  delete(@Param('id') id: string): Promise<any> {
-    return this.threatService.delete(id);
+  delete(@Param('threatId') threatId: string): Promise<any> {
+    return this.threatService.delete(threatId);
   }
 }

@@ -18,15 +18,15 @@ export class ThreatIntelligenceService {
     return this.threatModel.find().exec();
   }
 
-  findOne(id: string): Promise<ThreatIntelligence> {
-    return this.threatModel.findById(id).exec();
+  findOne(threatId: string): Promise<ThreatIntelligence> {
+    return this.threatModel.findById(threatId).exec();
   }
 
-  update(id: string, updateDto: UpdateThreatIntelligenceDto): Promise<ThreatIntelligence> {
-    return this.threatModel.findByIdAndUpdate(id, updateDto, { new: true }).exec();
-  }
+  // update(id: string, updateDto: UpdateThreatIntelligenceDto): Promise<ThreatIntelligence> {
+  //   return this.threatModel.findByIdAndUpdate(id, updateDto, { new: true }).exec();
+  // }
 
-  delete(id: string): Promise<any> {
-    return this.threatModel.findByIdAndDelete(id).exec();
+  delete(threatId: string): Promise<any> {
+    return this.threatModel.findByIdAndDelete(threatId).exec();
   }
 }

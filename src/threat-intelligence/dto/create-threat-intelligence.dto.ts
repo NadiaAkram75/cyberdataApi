@@ -2,6 +2,11 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsArray, IsNotEmpty, IsOptional, IsString, IsDate } from 'class-validator';
 
 export class CreateThreatIntelligenceDto {
+  @ApiProperty({ description: 'Threat Intelligence ID' })
+  @IsString()
+ threatId: string;
+
+
   @ApiProperty({ description: 'Name of the threat intelligence' })
   @IsNotEmpty()
   @IsString()

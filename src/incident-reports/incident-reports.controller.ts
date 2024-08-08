@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { IncidentReportsService } from './incident-reports.service';
 import { CreateIncidentReportDto } from './dto/create-incident-report.dto';
@@ -24,27 +24,19 @@ export class IncidentReportsController {
     return this.service.findAll();
   }
 
-  @Get(':id')
-  @ApiOperation({ summary: 'Retrieve a specific incident report by ID' })
-  @ApiResponse({ status: 200, description: 'The record with the given ID', type: IncidentReport })
+  @Get(':incidentId')
+  @ApiOperation({ summary: 'Retrieve a specific incident report by Incident ID' })
+  @ApiResponse({ status: 200, description: 'The record with the given Incident ID', type: IncidentReport })
   @ApiResponse({ status: 404, description: 'Not Found' })
-  findOne(@Param('id') id: string): Promise<IncidentReport> {
-    return this.service.findOne(id);
+  findOne(@Param('incidentId') incidentId: string): Promise<IncidentReport> {
+    return this.service.findOne(incidentId);
   }
 
-  @Put(':id')
-  @ApiOperation({ summary: 'Update a specific incident report by ID' })
-  @ApiResponse({ status: 200, description: 'The updated record', type: IncidentReport })
-  @ApiResponse({ status: 404, description: 'Not Found' })
-  update(@Param('id') id: string, @Body() updateDto: CreateIncidentReportDto): Promise<IncidentReport> {
-    return this.service.update(id, updateDto);
-  }
-
-  @Delete(':id')
-  @ApiOperation({ summary: 'Delete a specific incident report by ID' })
+  @Delete(':incidentId')
+  @ApiOperation({ summary: 'Delete a specific incident report by Incident ID' })
   @ApiResponse({ status: 200, description: 'The record has been successfully deleted' })
   @ApiResponse({ status: 404, description: 'Not Found' })
-  delete(@Param('id') id: string): Promise<any> {
-    return this.service.delete(id);
+  delete(@Param('incidentId') incidentId: string): Promise<any> {
+    return this.service.delete(incidentId);
   }
 }

@@ -16,26 +16,26 @@ export class SecurityTrendsService {
     return this.model.find().exec();
   }
 
-  async findOne(id: string): Promise<SecurityTrend> {
-    const record = await this.model.findById(id).exec();
+  async findOne(trendId: string): Promise<SecurityTrend> {
+    const record = await this.model.findById(trendId).exec();
     if (!record) {
-      throw new NotFoundException(`Record with ID ${id} not found`);
+      throw new NotFoundException(`Record with ID ${trendId} not found`);
     }
     return record;
   }
 
-  async update(id: string, updateDto: CreateSecurityTrendDto): Promise<SecurityTrend> {
-    const record = await this.model.findByIdAndUpdate(id, updateDto, { new: true }).exec();
-    if (!record) {
-      throw new NotFoundException(`Record with ID ${id} not found`);
-    }
-    return record;
-  }
+  // async update(id: string, updateDto: CreateSecurityTrendDto): Promise<SecurityTrend> {
+  //   const record = await this.model.findByIdAndUpdate(id, updateDto, { new: true }).exec();
+  //   if (!record) {
+  //     throw new NotFoundException(`Record with ID ${id} not found`);
+  //   }
+  //   return record;
+  // }
 
-  async delete(id: string): Promise<any> {
-    const result = await this.model.findByIdAndDelete(id).exec();
+  async delete(trendId: string): Promise<any> {
+    const result = await this.model.findByIdAndDelete(trendId).exec();
     if (!result) {
-      throw new NotFoundException(`Record with ID ${id} not found`);
+      throw new NotFoundException(`Record with ID ${trendId} not found`);
     }
     return result;
   }

@@ -3,6 +3,9 @@ import { Document } from 'mongoose';
 
 @Schema()
 export class SecurityTrend extends Document {
+  @Prop({ required: true, unique: true })
+  trendId: string;
+
   @Prop({ required: true })
   trendName: string;
 

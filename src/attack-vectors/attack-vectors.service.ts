@@ -9,6 +9,13 @@ export class AttackVectorsService {
   constructor(@InjectModel(AttackVector.name) private readonly model: Model<AttackVector>) {}
 
   async create(createDto: CreateAttackVectorDto): Promise<AttackVector> {
+    // Ensure `externalId` is unique
+    if (createDto.externalId) {
+      const existingRecord = await this.model.findOne({ externalId: createDto.externalId }).exec();
+      if (existingRecord) {
+        throw new Error(`Record with externalId ${createDto.externalId} already exists`);
+      }
+    }
     return this.model.create(createDto);
   }
 
@@ -16,26 +23,26 @@ export class AttackVectorsService {
     return this.model.find().exec();
   }
 
-  async findOne(id: string): Promise<AttackVector> {
-    const record = await this.model.findById(id).exec();
+  async findByExternalId(externalId: string): Promise<AttackVector> {
+    const record = await this.model.findOne({ externalId }).exec();
     if (!record) {
-      throw new NotFoundException(`Record with ID ${id} not found`);
+      throw new NotFoundException(`Record with externalId ${externalId} not found`);
     }
     return record;
   }
 
-  async update(id: string, updateDto: CreateAttackVectorDto): Promise<AttackVector> {
-    const record = await this.model.findByIdAndUpdate(id, updateDto, { new: true }).exec();
-    if (!record) {
-      throw new NotFoundException(`Record with ID ${id} not found`);
-    }
-    return record;
-  }
+  // async update(externalId: string, updateDto: CreateAttackVectorDto): Promise<AttackVector> {
+  //   const record = await this.model.findOneAndUpdate({ externalId }, updateDto, { new: true }).exec();
+  //   if (!record) {
+  //     throw new NotFoundException(`Record with externalId ${externalId} not found`);
+  //   }
+  //   return record;
+  // }
 
-  async delete(id: string): Promise<any> {
-    const result = await this.model.findByIdAndDelete(id).exec();
+  async delete(externalId: string): Promise<any> {
+    const result = await this.model.findOneAndDelete({ externalId }).exec();
     if (!result) {
-      throw new NotFoundException(`Record with ID ${id} not found`);
+      throw new NotFoundException(`Record with externalId ${externalId} not found`);
     }
     return result;
   }

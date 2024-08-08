@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateIncidentReportDto } from './dto/create-incident-report.dto';
@@ -9,6 +9,10 @@ export class IncidentReportsService {
   constructor(@InjectModel(IncidentReport.name) private readonly model: Model<IncidentReport>) {}
 
   async create(createDto: CreateIncidentReportDto): Promise<IncidentReport> {
+    const existingRecord = await this.model.findOne({ incidentId: createDto.incidentId }).exec();
+    if (existingRecord) {
+      throw new ConflictException(`Incident report with ID ${createDto.incidentId} already exists`);
+    }
     return this.model.create(createDto);
   }
 
@@ -16,26 +20,18 @@ export class IncidentReportsService {
     return this.model.find().exec();
   }
 
-  async findOne(id: string): Promise<IncidentReport> {
-    const record = await this.model.findById(id).exec();
+  async findOne(incidentId: string): Promise<IncidentReport> {
+    const record = await this.model.findOne({ incidentId }).exec();
     if (!record) {
-      throw new NotFoundException(`Record with ID ${id} not found`);
+      throw new NotFoundException(`Incident report with ID ${incidentId} not found`);
     }
     return record;
   }
 
-  async update(id: string, updateDto: CreateIncidentReportDto): Promise<IncidentReport> {
-    const record = await this.model.findByIdAndUpdate(id, updateDto, { new: true }).exec();
-    if (!record) {
-      throw new NotFoundException(`Record with ID ${id} not found`);
-    }
-    return record;
-  }
-
-  async delete(id: string): Promise<any> {
-    const result = await this.model.findByIdAndDelete(id).exec();
-    if (!result) {
-      throw new NotFoundException(`Record with ID ${id} not found`);
+  async delete(incidentId: string): Promise<any> {
+    const result = await this.model.deleteOne({ incidentId }).exec();
+    if (result.deletedCount === 0) {
+      throw new NotFoundException(`Incident report with ID ${incidentId} not found`);
     }
     return result;
   }

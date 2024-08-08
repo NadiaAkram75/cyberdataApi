@@ -9,6 +9,9 @@ export class AttackVector extends Document {
   @Prop({ required: true })
   description: string;
 
+  @Prop({ required: true, unique: true })
+  externalId: string;  // Added field
+
   @Prop([String])
   techniques?: string[];
 

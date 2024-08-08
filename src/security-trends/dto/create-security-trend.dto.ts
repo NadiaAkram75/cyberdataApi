@@ -2,6 +2,12 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsArray, IsOptional, IsString, IsDate } from 'class-validator';
 
 export class CreateSecurityTrendDto {
+
+  @ApiProperty({ description: 'Trend ID' })
+  @IsString()
+  trendId: string;
+
+
   @ApiProperty({ description: 'Name of the security trend' })
   @IsString()
   trendName: string;

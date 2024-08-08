@@ -10,6 +10,11 @@ export class CreateAttackVectorDto {
   @IsString()
   description: string;
 
+  @ApiProperty({ description: 'Unique identifier for the attack vector', required: false })
+  @IsOptional()
+  @IsString()
+  externalId?: string;
+
   @ApiProperty({ description: 'Techniques used by this attack vector', type: [String], required: false })
   @IsOptional()
   @IsArray()

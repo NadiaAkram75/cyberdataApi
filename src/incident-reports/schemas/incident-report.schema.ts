@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 
 @Schema()
 export class IncidentReport extends Document {
-  @Prop({ required: true })
+  @Prop({ required: true, unique: true })
   incidentId: string;
 
   @Prop({ required: true })
